@@ -4,10 +4,10 @@ Writeups organized by competition/event. Create a subfolder per event:
 
 ```
 ctf/
-  2026-ccdc-regionals/
+  2025-insomnihack/
     index.md
     web-challenge-1.md
-  2026-picoctf/
+  2024-ncl/
     index.md
     ...
 ```
