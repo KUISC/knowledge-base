@@ -47,9 +47,6 @@ nav:
   - Meetings: meetings/index.md
   - CTF Writeups: ctf/index.md
   - Tooling: tooling/index.md
-  - Infrastructure:
-      - Overview: infrastructure/index.md
-      - Terraform: infrastructure/terraform/index.md
-      - VM Images: infrastructure/vm-images/index.md
+  - Infrastructure: infrastructure/index.md
   - Playbooks: playbooks/index.md
   - Presentations: presentations/index.md
