@@ -1,5 +1,5 @@
 site_name: KUISC Knowledge Base
-site_url: https://kb.kuisc.org  # or https://kuisc.github.io/knowledge-base/ if using a subpath
+site_url: http://kuisc.org/knowledge-base/
 repo_url: https://github.com/kuisc/knowledge-base
 repo_name: kuisc/knowledge-base
 edit_uri: edit/main/docs/
