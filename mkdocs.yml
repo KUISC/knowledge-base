@@ -1,0 +1,55 @@
+site_name: KUISC Knowledge Base
+site_url: https://kb.kuisc.org  # or https://kuisc.github.io/knowledge-base/ if using a subpath
+repo_url: https://github.com/kuisc/knowledge-base
+repo_name: kuisc/knowledge-base
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+    - scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+  - awesome-pages   # lets each folder order itself with a .pages file instead of one giant nav: block
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Onboarding: onboarding/index.md
+  - Meetings: meetings/index.md
+  - CTF Writeups: ctf/index.md
+  - Tooling: tooling/index.md
+  - Infrastructure:
+      - Overview: infrastructure/index.md
+      - Terraform: infrastructure/terraform/index.md
+      - VM Images: infrastructure/vm-images/index.md
+  - Playbooks: playbooks/index.md
+  - Presentations: presentations/index.md
