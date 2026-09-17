@@ -8,13 +8,15 @@ Activity: Wireshark Challenge
 
 This walkthrough assumes you have Wireshark open with the correct file for each challenge.
 
-1. Packet Count
+### Packet Count
+
 Wireshark shows the total packet count in the botton right of the interface. `10`
 
-2. First Request
+### First Request
+
 Wireshark shows the destination of a packet as the fourth column by default. For the very first packet, this reads `93.184.216.34`
 
-3. Server Banner
+### Server Banner
 We see under the Protocol tab that packet 4 is HTTP. We can filter for this type by applying the display filter `http` in the bar just above the column headers.
 After applying that filter, two packets are visible. The first is a GET request, and the second it's corresponding response.
 Clicking on the response, the bottom half of the screen now displays the information the packet contains.
@@ -42,25 +44,25 @@ Line-based text data: text/html (1 lines)
 Reading the Server banner, we see the answer:
 `nginx/1.18.0 (Ubuntu)`
 
-4. Full URI
+### Full URI
 This can also be seen in the above expansion.
 `http://example.com/index.html`
 
-5. Protocol Breakdown
+### Protocol Breakdown
 Wireshark offers a variety of analysis tools that are very helpful when dealing with large packet captures. 
 The Protocol Hierarchy view can be opened by clicking `Statistics -> Protocol Hierarchy`.
 
 Of the 10 TCP packets in the capture, we can see that 2 of them are HTTP.
 
-6. Largest Packet
+### Largest Packet
 Packet Length analysis can be viewed via `Statistics -> Packet Lengths`.
 Checking the Max Val, we see `243`.
 
-7. Query Count
+### Query Count
 Looking at the DNS queries in the capture, we can see a query number as `Standard Query: 0x10XX` in each packet, starting at 0x1001 and ending at 1012.
 Since the number starts with 0x, we know that it's base16/hexadecimal. Doing some quick conversion, this means there are `18` total DNS queries, each with their own response from the DNS server. 
 
-8. Record Type
+### Record Type
 Packet 3, Type A
 Clicking on packet 3 (since we could pick any packet), we can see in the bottom left under Domain Name System:
 ```
@@ -87,16 +89,16 @@ Domain Name System (query)
 Looking at `Domain Name System -> Queries -> www.wikiedia.org -> Type`, we see that the request is for a `Type A` record.
 
 
-9. Busiest Host
+### Busiest Host
 Conversations can be viewed with `Statistics -> Conversations`. We see only one conversation between two hosts.
 Since there are only two hosts, and the question asks for the most active sender OR reciever, either host would be correct. 
 I'll pick busiest sender, which was `10.0.0.1`.
 
-10. Response Time
+### Response Time
 DNS Statistics can be viewed with `Statistics -> DNS -> General`
 Under Service Stats, we can see a max response time of `512ms`
 
-11. Query Pattern
+### Query Pattern
 Queried Domains (excluding normal traffic):
 ```
 a1f3.data.exfil-test.net
@@ -114,17 +116,17 @@ bb31.data.exfil-test.net
 ```
 This looks a lot like someone's beaconing back data to a c2 server.
 
-12. Beacon Domain
+### Beacon Domain
 We see a single request to www.example.com, which I assume to be benign, and every other query is to `cdn-update-service.net`.
 Counting these requests (not including the responses) we see `14 requests`.
 
-13. Dropped File
+### Dropped File
 
 First, lets filter by http request traffic by applying `http.requests` as our filter. 
 Now, we see a bunch of GET requests to `cdn-update-service.net/beacon`. We also see a single request to `cdn-update-service.net/dl/svchost_update.exe`. 
 We can export this object by going to `File -> Export Objects -> HTTP`. In the menu that pops up, we can see all the beacon files plus the .exe file, which Wireshark identifies as `application/octet-stream`
 
-14. Something Extra
+### Something Extra
 This is by far the hardest (and closest to a competition-level) challenge in the lab.
 Looking at the beaconing to the malicious update service domain, I noticied a cookie called `src` with a (seemingly) random 3-byte value.
 
@@ -140,7 +142,7 @@ Since I've been doing challenges like this for a while, this matches up pretty w
 
 Using an online tool to decode the base64, we get the flag: `flag{c00k1e_dr1p_3xf1l}`
 
-15. Incident Summary
+### Incident Summary
 The order of events in this packet capture are a little odd.
 Usually, we see the malicious executable download happen first and then beaconing after that, to simulate a user (or bad actor) compromising a machine.
 In this one, we see the beaconing already happening and the download last. This implies that the machine was already compromised by the time the capture was started, and that `svchost_update.exe` is likely a tool that the attacker needed/wanted to continue compromising the host/network.
