@@ -63,7 +63,6 @@ Looking at the DNS queries in the capture, we can see a query number as `Standar
 Since the number starts with 0x, we know that it's base16/hexadecimal. Doing some quick conversion, this means there are `18` total DNS queries, each with their own response from the DNS server. 
 
 ### Record Type
-Packet 3, Type A
 Clicking on packet 3 (since we could pick any packet), we can see in the bottom left under Domain Name System:
 ```
 Frame 3: Packet, 77 bytes on wire (616 bits), 77 bytes captured (616 bits)
