@@ -29,7 +29,7 @@ Activity: Wireshark Challenge
 11. Query Pattern
 	Repeated requests to data.exfil-test.net with garbage requests suggests DNS exfil of data
 12. Beacon Domain
-	cdn-update-service.net
+	cdn-update-service.net, 14  times
 13. Dropped File
 	svchost_update.exe, application/octet-stream
 14. Something Extra
