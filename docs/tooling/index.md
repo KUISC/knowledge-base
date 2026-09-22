@@ -1,6 +1,6 @@
 # Tooling
 
-Custom scripts and tools built by/for the club. Each tool gets its own page
+Custom scripts and tools built by/for the club, as well as existing tools that we use frequently. Each tool gets its own page
 (or its own repo, linked from here, if it's substantial) covering:
 
 - What it does and why it exists
