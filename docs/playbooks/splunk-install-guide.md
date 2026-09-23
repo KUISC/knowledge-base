@@ -1,4 +1,4 @@
-Splunk Installation Guide
+# Splunk Installation Guide
 
 ## Requirements
 
@@ -8,24 +8,7 @@ Splunk Installation Guide
 
 ## Host Specs
 
-- Lubuntu 24.04RAM
-- 4 CPU
-
-### Splunk Server Install
-
-1. Download the Splunk **.deb** package:
-   ```
-   wget -O splunk-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.4.3/linux/splunk-10.4.3-4174a2deda5d-linux-amd64.deb"
-   ```
-2. Install the package (this installs to **/opt/splunk**):
-   ```
-   dpkg -i {downloaded .deb}
-   ```
-3. Fix ownership of the install directory:
-   ```
-   sudo chown -R splunk:splunk /opt/splunk
-   ```
-
+- Lubuntu 24.04
 - Fresh minimal install
 - Updated
 - 64GB storage
@@ -59,9 +42,9 @@ Splunk Installation Guide
    ./splunk start
    ```
    - Accept the license agreement
-   - Login: `kuisc:kuisc123` (replace with comp-ready creds)
+   - Login: `kuisc:kuisc123`
 
-Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc123` (or previously set creds).
+Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc123`.
 
 ### Configuration
 
@@ -71,10 +54,12 @@ Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc12
    - Make sure it's enabled
 2. **Create an index:**
    Settings → Indexes → New Index
-   - Name it to match whatever you're configuring in `inputs.conf` (here, `os`)
+   - Name it `linux` — team decision to use a single index for all Linux logging (syslog, journald, etc.)
    - Set any other options as needed
 
 ## Forwarder Install
+
+Ships all journald logs to a remote indexer using `journald_input` — the journald input app bundled with the Universal Forwarder.
 
 1. Download the Universal Forwarder `.deb` package:
    ```
@@ -84,40 +69,41 @@ Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc12
    ```
    dpkg -i {forwarder.deb}
    ```
-3. Give `splunkfwd` access to read the syslog file:
-   ```
-   # Allow the splunk user to read the current syslog file
-   sudo setfacl -m u:splunkfwd:r /var/log/syslog
-
-   # Allow the splunk user to read the parent directory to handle log rotations
-   sudo setfacl -m u:splunkfwd:rx /var/log
-   ```
-4. Switch to the `splunkfwd` user:
+3. Switch to the `splunkfwd` user:
    ```
    su splunkfwd
    ```
-5. Move into the forwarder's local config directory:
+4. Enable boot-start as the `splunkfwd` user:
    ```
-   cd /opt/splunkforwarder/etc/system/local
+   /opt/splunkforwarder/bin/splunk enable boot-start -user splunkfwd
    ```
-6. Create `outputs.conf`:
+5. Start the forwarder, accepting the license and seeding the admin password:
+   ```
+   /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd 'kuisc123'
+   ```
+6. Create `outputs.conf` (`/opt/splunkforwarder/etc/system/local/outputs.conf`) pointing at the remote indexer:
    ```
    [tcpout]
-   defaultGroup = primary_indexers
+   defaultGroup = default-autolb-group
 
-   [tcpout:primary_indexers]
-   server = 127.0.0.1:9997
+   [tcpout:default-autolb-group]
+   server = <indexer-ip>:9997
    ```
-7. Create `inputs.conf`:
+7. Create the `local/` config directory for the bundled `journald_input` app, if it doesn't already exist:
    ```
-   [monitor:///var/log/syslog]
+   mkdir -p /opt/splunkforwarder/etc/apps/journald_input/local/
+   ```
+8. Create `inputs.conf` in that directory with a catch-all journald input:
+   ```
+   [journald://catch-all]
+   index = linux
+   sourcetype = journald
    disabled = false
-   index = os
-   sourcetype = syslog
+   journalctl-quiet = true
    ```
-8. Restart the forwarder:
+9. Restart the forwarder to apply changes:
    ```
-   cd /opt/splunkforwarder/bin && ./splunk restart
+   /opt/splunkforwarder/bin/splunk restart
    ```
    - Accept the TOS prompt if shown
-9. The beast has been slain.
+10. The beast has been slain.
