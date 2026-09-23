@@ -61,6 +61,8 @@ Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc12
 
 Ships all journald logs to a remote indexer using `journald_input` — the journald input app bundled with the Universal Forwarder.
 
+> IMPORTANT: If installing to the same host as the indexer, make sure to use a different port (ex. 8099) instead of the default management port of 8089
+
 1. Download the Universal Forwarder `.deb` package:
    ```
    wget -O splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/universalforwarder/releases/10.4.3/linux/splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb"
