@@ -7,11 +7,13 @@
 - `wget`
 
 ## Tested Hosts
+
 These are the VMs that this guide has been tested with.
 
 ### Splunk Server
 
 Lubuntu 24:
+
 * Fresh minimal install
 * Updated
 * 64GB storage
@@ -21,6 +23,7 @@ Lubuntu 24:
 ### Splunk Forwarder
 
 Lubuntu 24.04:
+
 * Fresh full install
 * updated
 * 32gb storage
@@ -28,6 +31,7 @@ Lubuntu 24.04:
 * 2 cpu
 
 Fedora Server 44:
+
 * Fresh server install
 * updated
 * 32gb storage
