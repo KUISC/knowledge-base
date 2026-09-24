@@ -12,28 +12,28 @@ These are the VMs that this guide has been tested with.
 ### Splunk Server
 
 Lubuntu 24:
-- Fresh minimal install
-- Updated
-- 64GB storage
-- 8GB RAM
-- 4 CPU
+* Fresh minimal install
+* Updated
+* 64GB storage
+* 8GB RAM
+* 4 CPU
 
 ### Splunk Forwarder
 
 Lubuntu 24.04:
-- Fresh full install
-- updated
-- 32gb storage
-- 2gb ram
-- 2 cpu
+* Fresh full install
+* updated
+* 32gb storage
+* 2gb ram
+* 2 cpu
 
 Fedora Server 44:
-- Fresh server install
-- updated
-- 32gb storage
-- 2gb ram
-- 2 cpu
-- cockpit disabled
+* Fresh server install
+* updated
+* 32gb storage
+* 2gb ram
+* 2 cpu
+* cockpit disabled
 
 
 ## Splunk Server Install
