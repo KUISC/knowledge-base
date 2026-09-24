@@ -42,7 +42,7 @@ Fedora Server 44:
 
 ## Splunk Server Install
 
-1. Download the Splunk `.deb` package (use RPM for RHEL-based distros:
+1. [Download](https://www.splunk.com/en_us/download/splunk-enterprise.html) the Splunk `.deb` package (use RPM for RHEL-based distros:
    ```
    wget -O splunk-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.4.3/linux/splunk-10.4.3-4174a2deda5d-linux-amd64.deb"
    ```
@@ -86,7 +86,7 @@ Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc12
 
 Ships all journald logs to a remote indexer using `journald_input` — the journald input app bundled with the Universal Forwarder. This should be done on a **separate host** that you want to monitor.
 
-1. Download the Universal Forwarder `.deb` package (rpm for RHEL):
+1. [Download](https://www.splunk.com/en_us/download/universal-forwarder.html) the Universal Forwarder `.deb` package (rpm for RHEL):
    ```
    wget -O splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/universalforwarder/releases/10.4.3/linux/splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb"
    ```
