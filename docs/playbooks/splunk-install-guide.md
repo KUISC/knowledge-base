@@ -6,22 +6,43 @@
 - Disregard for personal mental health
 - `wget`
 
-## Host Specs
+## Tested Hosts
+These are the VMs that this guide has been tested with.
 
-- Lubuntu 24.04
+### Splunk Server
+
+Lubuntu 24:
 - Fresh minimal install
 - Updated
 - 64GB storage
 - 8GB RAM
 - 4 CPU
 
+### Splunk Forwarder
+
+Lubuntu 24.04:
+- Fresh full install
+- updated
+- 32gb storage
+- 2gb ram
+- 2 cpu
+
+Fedora Server 44:
+- Fresh server install
+- updated
+- 32gb storage
+- 2gb ram
+- 2 cpu
+- cockpit disabled
+
+
 ## Splunk Server Install
 
-1. Download the Splunk `.deb` package:
+1. Download the Splunk `.deb` package (use RPM for RHEL-based distros:
    ```
    wget -O splunk-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.4.3/linux/splunk-10.4.3-4174a2deda5d-linux-amd64.deb"
    ```
-2. Install the package (this installs to `/opt/splunk`):
+2. Install the package (this installs to `/opt/splunk`, use dnf for RHEL):
    ```
    dpkg -i {downloaded .deb}
    ```
@@ -59,29 +80,27 @@ Once running, navigate to `http://localhost:8000` and log in with `kuisc:kuisc12
 
 ## Forwarder Install
 
-Ships all journald logs to a remote indexer using `journald_input` — the journald input app bundled with the Universal Forwarder.
+Ships all journald logs to a remote indexer using `journald_input` — the journald input app bundled with the Universal Forwarder. This should be done on a **separate host** that you want to monitor.
 
-> IMPORTANT: If installing to the same host as the indexer, make sure to use a different port (ex. 8099) instead of the default management port of 8089
-
-1. Download the Universal Forwarder `.deb` package:
+1. Download the Universal Forwarder `.deb` package (rpm for RHEL):
    ```
    wget -O splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb "https://download.splunk.com/products/universalforwarder/releases/10.4.3/linux/splunkforwarder-10.4.3-4174a2deda5d-linux-amd64.deb"
    ```
-2. Install the package:
+2. Install the package (dnf for RHEL):
    ```
    dpkg -i {forwarder.deb}
    ```
-3. Switch to the `splunkfwd` user:
+3. Enable boot-start as the `splunkfwd` user, accepting the license and seeding the admin password:
+   ```
+   /opt/splunkforwarder/bin/splunk enable boot-start -user splunkfwd  --accept-license --answer-yes --no-prompt --seed-passwd 'kuisc123'
+   ```
+4. Switch to the `splunkfwd` user:
    ```
    su splunkfwd
    ```
-4. Enable boot-start as the `splunkfwd` user:
+5. Start the forwarder:
    ```
-   /opt/splunkforwarder/bin/splunk enable boot-start -user splunkfwd
-   ```
-5. Start the forwarder, accepting the license and seeding the admin password:
-   ```
-   /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd 'kuisc123'
+   /opt/splunkforwarder/bin/splunk start
    ```
 6. Create `outputs.conf` (`/opt/splunkforwarder/etc/system/local/outputs.conf`) pointing at the remote indexer:
    ```
