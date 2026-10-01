@@ -10,4 +10,4 @@ below — see [Contributing](../contributing.md) for the size guidance.
 | Date | Title | Speaker | Link |
 |---|---|---|---|
 | 2026-09-16 | Networking Basics | Luke | [Meeting 3 - Networking Basics](Networking-Basics.pdf) |
-| | | | |
+| 2026-09-30 | Windows Active Directory | Luke | [Windows Active Directory](Windows-Active-Directory.pdf) |
