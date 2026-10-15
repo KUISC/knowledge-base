@@ -12,3 +12,4 @@ below — see [Contributing](../contributing.md) for the size guidance.
 | 2026-09-16 | Networking Basics | Luke | [Meeting 3 - Networking Basics](Networking-Basics.pdf) |
 | 2026-09-30 | Windows Active Directory | Luke | [Windows Active Directory](Windows-Active-Directory.pdf) |
 | 2026-09-28 | Wazuh Intro | David | [Wazuh Intro](wazuh-intro.pdf) |
+| 2026-10-15 | Meeting 7 - Reverse Engineering | TBD | [Reverse Engineering](Reverse-Engineering.pdf) |
